@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Am I over the HMRC line? — free checker for Vinted, eBay, Depop and Etsy sellers (UK)</title>
+<meta name="description" content="Free, no sign-up checker for UK online sellers. Type your sales and see where you stand against the two lines: the 30 sales / €2,000 platform-reporting line and the £1,000 trading allowance, with the gov.uk page each figure comes from.">
+<meta property="og:title" content="Am I over the HMRC line? — free checker for UK online sellers">
+<meta property="og:description" content="Two lines, two different years. Type your numbers, see where you stand. Nothing stored, no sign-up, not advice.">
+<style>
+  :root{
+    --bg:#f6f7f4; --card:#ffffff; --ink:#1d1f1a; --muted:#5d6256; --line:#dcdfd6;
+    --accent:#1f5f8b; --accent-ink:#ffffff;
+    --green:#1f7a3f; --green-bg:#e3f3e8; --amber:#9a6400; --amber-bg:#fff2d6; --red:#b3261e; --red-bg:#fde8e6;
+    --grey:#5d6256; --grey-bg:#eceee8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#15171a; --card:#1e2126; --ink:#eef0ea; --muted:#a6ab9f; --line:#343840;
+      --accent:#6fb1e0; --accent-ink:#0f1a24;
+      --green:#7ed69a; --green-bg:#17301f; --amber:#f2c35b; --amber-bg:#33280f; --red:#ff8a80; --red-bg:#3a1a17;
+      --grey:#a6ab9f; --grey-bg:#262a30;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  main{max-width:720px;margin:0 auto;padding:24px 16px 48px}
+  h1{font-size:1.7rem;line-height:1.2;margin:0 0 8px}
+  h2{font-size:1.15rem;margin:0 0 4px}
+  p{margin:0 0 12px}
+  .lead{color:var(--muted);margin-bottom:20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 16px;margin:0 0 16px}
+  .card small.year{display:block;color:var(--muted);margin-bottom:12px}
+  label{display:block;font-weight:600;margin:12px 0 4px}
+  label span.hint{display:block;font-weight:400;color:var(--muted);font-size:.9rem}
+  input[type=number],select{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+  input[type=number]:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .radio{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+  .radio label{font-weight:400;margin:0;display:flex;gap:8px;align-items:flex-start}
+  .radio input{margin-top:5px}
+  .result{border-radius:10px;padding:12px 14px;margin-top:14px;border:1px solid transparent}
+  .result .pill{display:inline-block;font-weight:700;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-bottom:6px}
+  .result.green{background:var(--green-bg);border-color:var(--green)} .result.green .pill{background:var(--green);color:#fff}
+  .result.amber{background:var(--amber-bg);border-color:var(--amber)} .result.amber .pill{background:var(--amber);color:#fff}
+  .result.red{background:var(--red-bg);border-color:var(--red)} .result.red .pill{background:var(--red);color:#fff}
+  .result.grey{background:var(--grey-bg);border-color:var(--line)} .result.grey .pill{background:var(--grey);color:#fff}
+  .result p{margin:0 0 8px} .result p:last-child{margin:0}
+  .result a{color:inherit}
+  .meter{height:8px;border-radius:4px;background:var(--grey-bg);overflow:hidden;margin:8px 0 4px}
+  .meter i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+  .small{font-size:.9rem;color:var(--muted)}
+  a{color:var(--accent)}
+  .cta{display:block;text-align:center;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:700;padding:12px 16px;border-radius:10px;margin:8px 0 4px}
+  .cta:hover{filter:brightness(1.08)}
+  dl{margin:0} dt{font-weight:600;margin-top:8px} dd{margin:0 0 4px}
+  footer{color:var(--muted);font-size:.85rem;margin-top:24px;border-top:1px solid var(--line);padding-top:12px}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<main>
+  <h1>Am I over the HMRC line?</h1>
+  <p class="lead">Free checker for UK sellers on Vinted, eBay, Depop and Etsy. There are <strong>two</strong> lines, measured over <strong>two different years</strong>. Type your numbers and see where you stand against each, with the gov.uk page every figure comes from. Nothing you type leaves this page.</p>
+
+  <!-- ───────── Line 1: platform reporting ───────── -->
+  <section class="card" aria-labelledby="l1h">
+    <h2 id="l1h">Line 1 — will the platform report me to HMRC?</h2>
+    <small class="year">Counted per platform, per <strong>calendar</strong> year: <span id="calYear"></span>. Being reported is not a tax bill.</small>
+
+    <label for="platform">Platform <span class="hint">Each platform counts separately.</span></label>
+    <select id="platform">
+      <option>Vinted</option><option>eBay</option><option>Depop</option><option>Etsy</option><option>Another platform</option>
+    </select>
+
+    <label for="sales">Sales of goods on this platform since 1 January <span class="hint">Number of items sold, not listed.</span></label>
+    <input id="sales" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 18">
+
+    <label for="total">Total received on this platform since 1 January (£) <span class="hint">What buyers paid you for the items (before the platform's fees).</span></label>
+    <input id="total" type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 640">
+
+    <div id="r1" class="result grey" aria-live="polite">
+      <span class="pill">Waiting</span>
+      <p>Enter your sales and total to see where you are.</p>
+    </div>
+  </section>
+
+  <!-- ───────── Line 2: trading allowance ───────── -->
+  <section class="card" aria-labelledby="l2h">
+    <h2 id="l2h">Line 2 — the £1,000 trading allowance</h2>
+    <small class="year">Counted across <strong>all</strong> platforms and trades, per <strong>tax</strong> year: <span id="taxYear"></span>.</small>
+
+    <label>What are you mostly selling?</label>
+    <div class="radio">
+      <label><input type="radio" name="kind" value="own" checked> My own things I no longer want (clothes, old phone, loft clear-out)</label>
+      <label><input type="radio" name="kind" value="trade"> Things I bought or made in order to sell them</label>
+      <label><input type="radio" name="kind" value="mixed"> A mix of both</label>
+    </div>
+
+    <div id="tradeBlock">
+      <label for="gross">Total received for the <em>bought-or-made-to-sell</em> items since 6 April, all platforms (£) <span class="hint">Gross: what buyers paid, before fees, postage or what you paid for stock.</span></label>
+      <input id="gross" type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 850">
+    </div>
+
+    <label for="bigItem">Did any single item (or a set, like a collection) sell for more than £6,000?</label>
+    <select id="bigItem"><option value="no">No</option><option value="yes">Yes</option></select>
+
+    <div id="r2" class="result grey" aria-live="polite">
+      <span class="pill">Waiting</span>
+      <p>Choose what you sell to see where you are.</p>
+    </div>
+  </section>
+
+  <!-- ───────── Dates ───────── -->
+  <section class="card">
+    <h2>Dates that matter</h2>
+    <dl id="dates"></dl>
+    <p class="small" style="margin-top:10px">The "£3,000 threshold" in the news was announced in March 2025 but is <strong>not yet law</strong>; HMRC's own page for side-hustlers still says £1,000 (checked <span class="checked"></span>). <a href="https://taxhelpforhustles.campaign.gov.uk/" rel="noopener">HMRC: Tax help for hustles</a></p>
+  </section>
+
+  <!-- ───────── Sheet CTA ───────── -->
+  <section class="card" id="ctaCard">
+    <h2>Want the running totals, every month?</h2>
+    <p>This page checks one moment in time. <strong>Over the Line</strong> is a £9 spreadsheet (Excel and Google Sheets) that logs each sale and shows both traffic lights per platform, for the calendar year <em>and</em> the tax year, plus the figures you'd need if you ever fill in a Self Assessment self-employment page.</p>
+    <a id="ctaLink" class="cta" href="#" rel="noopener">Get the £9 spreadsheet →</a>
+    <p class="small">One-off payment, instant download, 14-day refund if it doesn't do what the listing says.</p>
+  </section>
+
+  <footer>
+    <p><strong>Not advice.</strong> This page adds up the figures you type and shows the thresholds HMRC publishes on gov.uk, with links. It does not calculate tax, decide whether you are trading, or tell you whether you must register or file. It is not tax, legal or financial advice. Figures were checked on gov.uk on <span class="checked"></span>; rules change — always check gov.uk or speak to HMRC or a qualified accountant about your own situation. Nothing you enter is stored or sent anywhere.</p>
+    <p>Sources: <a href="https://www.gov.uk/guidance/selling-goods-or-services-on-a-digital-platform" rel="noopener">gov.uk — Selling goods or services on a digital platform</a> · <a href="https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income" rel="noopener">gov.uk — Tax-free allowances on property and trading income</a> · <a href="https://www.gov.uk/self-assessment-tax-returns/deadlines" rel="noopener">gov.uk — Self Assessment deadlines</a> · <a href="https://www.gov.uk/government/publications/chattels-and-capital-gains-tax-hs293-self-assessment-helpsheet/personal-possessions-and-capital-gains-tax-2024-hs293" rel="noopener">gov.uk — Personal possessions and Capital Gains Tax (HS293)</a> · <a href="https://www.vinted.co.uk/uk-reporting" rel="noopener">Vinted — UK reporting</a></p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  // ── Settings: change these when the rules change. Everything else follows. ──
+  var SETTINGS = {
+    checkedOn: "27 October 2026",     // date the figures were last checked on gov.uk
+    sheetUrl: "",                      // Payhip URL of the £9 sheet. Empty = hide the button.
+    reportSales: 30,                   // platform reporting: sales of goods per calendar year
+    reportValueGbp: 1700,              // platform reporting: €2,000, "about £1,700" per gov.uk
+    allowanceGbp: 1000,                // trading allowance per tax year
+    cgtChattelGbp: 6000,               // CGT personal-possessions limit per item/set
+    amberSalesFrom: 25,                // amber starts here
+    amberValueFrom: 1400,
+    amberAllowanceFrom: 800
+  };
+
+  var GOV = {
+    platform: "https://www.gov.uk/guidance/selling-goods-or-services-on-a-digital-platform",
+    allowance: "https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income",
+    deadlines: "https://www.gov.uk/self-assessment-tax-returns/deadlines",
+    cgt: "https://www.gov.uk/government/publications/chattels-and-capital-gains-tax-hs293-self-assessment-helpsheet/personal-possessions-and-capital-gains-tax-2024-hs293",
+    hustles: "https://taxhelpforhustles.campaign.gov.uk/"
+  };
+
+  var $ = function(id){ return document.getElementById(id); };
+  var gbp = function(n){ n = Number(n); var whole = Math.abs(n - Math.round(n)) < 0.005; return "£" + n.toLocaleString("en-GB", {minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: whole ? 0 : 2}); };
+  var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); };
+
+  // ── Dates ──
+  var today = new Date();
+  var y = today.getFullYear();
+  // UK tax year runs 6 April to 5 April.
+  var taxStartYear = (today.getMonth() > 3 || (today.getMonth() === 3 && today.getDate() >= 6)) ? y : y - 1;
+  var taxEndYear = taxStartYear + 1;
+  var ty = taxStartYear + "/" + String(taxEndYear).slice(2);
+  $("calYear").textContent = "1 January to 31 December " + y;
+  $("taxYear").textContent = "6 April " + taxStartYear + " to 5 April " + taxEndYear + " (" + ty + ")";
+  Array.prototype.forEach.call(document.querySelectorAll(".checked"), function(el){ el.textContent = SETTINGS.checkedOn; });
+
+  $("dates").innerHTML =
+    "<dt>Platform reporting period</dt><dd>1 January – 31 December " + y + ". Platforms send HMRC their report by 31 January " + (y+1) + " and must give you a copy. <a href='" + GOV.platform + "' rel='noopener'>gov.uk</a></dd>" +
+    "<dt>Tax year for the trading allowance</dt><dd>6 April " + taxStartYear + " – 5 April " + taxEndYear + ".</dd>" +
+    "<dt>If you need to register for Self Assessment for " + ty + "</dt><dd>By 5 October " + taxEndYear + ". <a href='" + GOV.deadlines + "' rel='noopener'>gov.uk deadlines</a></dd>" +
+    "<dt>Return and payment for " + ty + "</dt><dd>Online return and payment by 31 January " + (taxEndYear+1) + " (paper return by 31 October " + taxEndYear + ").</dd>";
+
+  // ── CTA ──
+  if (SETTINGS.sheetUrl) { $("ctaLink").href = SETTINGS.sheetUrl; } else { $("ctaCard").classList.add("hidden"); }
+
+  // ── Line 1 ──
+  function line1(){
+    var platform = $("platform").value;
+    var sales = $("sales").value === "" ? null : Math.max(0, Math.floor(Number($("sales").value)));
+    var total = $("total").value === "" ? null : Math.max(0, Number($("total").value));
+    var box = $("r1");
+    if (sales === null && total === null) { set(box, "grey", "Waiting", "<p>Enter your sales and total to see where you are.</p>"); return; }
+    var s = sales || 0, t = total || 0;
+    var overSales = s >= SETTINGS.reportSales, overValue = t > SETTINGS.reportValueGbp;
+    var nearSales = s >= SETTINGS.amberSalesFrom, nearValue = t >= SETTINGS.amberValueFrom;
+    var pS = Math.min(100, Math.round(100 * s / SETTINGS.reportSales));
+    var pV = Math.min(100, Math.round(100 * t / SETTINGS.reportValueGbp));
+    var meters = "<p class='small'>Sales: " + s + " of " + SETTINGS.reportSales + "</p><div class='meter'><i style='width:" + pS + "%'></i></div>" +
+                 "<p class='small'>Total: " + gbp(t) + " of about " + gbp(SETTINGS.reportValueGbp) + " (€2,000)</p><div class='meter'><i style='width:" + pV + "%'></i></div>";
+    var src = "<p class='small'>gov.uk: your details are <em>not</em> reported if you make fewer than " + SETTINGS.reportSales + " sales of goods in a calendar year <em>and</em> receive €2,000 (about " + gbp(SETTINGS.reportValueGbp) + ") or less. Reaching either line means " + esc(platform) + " reports you. Platforms convert €2,000 at their own rate, so the pound figure moves a little each year. <a href='" + GOV.platform + "' rel='noopener'>Source</a></p>";
+    if (overSales || overValue) {
+      set(box, "red", "Over line 1",
+        "<p>Based on what you typed, " + esc(platform) + " will report your details and your " + y + " sales total to HMRC by 31 January " + (y+1) + ", because you've reached " + (overSales && overValue ? "both the sales and the value line" : overSales ? "the " + SETTINGS.reportSales + "-sales line" : "the €2,000 line") + ".</p>" +
+        "<p><strong>This is not a tax bill.</strong> HMRC's own page says a platform report \"does not automatically mean you owe tax\" and that you're \"unlikely to pay tax if you sell personal items from your home\". What matters for tax is line 2 below.</p>" + meters + src);
+    } else if (nearSales || nearValue) {
+      set(box, "amber", "Close to line 1",
+        "<p>Based on what you typed, " + esc(platform) + " isn't due to report you yet, but you're " + (nearSales ? (SETTINGS.reportSales - s) + " sale" + (SETTINGS.reportSales - s === 1 ? "" : "s") : gbp(SETTINGS.reportValueGbp - t)) + " away. If you expect to cross it before 31 December, it's worth knowing now what the January copy of the report will say.</p>" + meters + src);
+    } else {
+      set(box, "green", "Under line 1",
+        "<p>Based on what you typed, " + esc(platform) + " isn't due to report you for " + y + ": you're under both the " + SETTINGS.reportSales + "-sales line and the €2,000 line. Whether you owe any tax is a separate question — see line 2.</p>" + meters + src);
+    }
+  }
+
+  // ── Line 2 ──
+  function line2(){
+    var kind = document.querySelector("input[name=kind]:checked").value;
+    var gross = $("gross").value === "" ? null : Math.max(0, Number($("gross").value));
+    var big = $("bigItem").value === "yes";
+    var box = $("r2");
+    $("tradeBlock").classList.toggle("hidden", kind === "own");
+    var cgt = big ? "<p><strong>Over £6,000 for one item or set:</strong> gov.uk's Capital Gains Tax rules for personal possessions can apply even to your own things. <a href='" + GOV.cgt + "' rel='noopener'>HS293 on gov.uk</a> explains when there is a gain to work out.</p>" : "";
+    var srcA = "<p class='small'>gov.uk: the trading allowance is £1,000 of gross trading income per tax year. £1,000 or less: no need to tell HMRC, but keep records. Over £1,000: register for Self Assessment by 5 October after the tax year ends. HMRC's example of trading: buying things at car boot sales or charity shops to sell for more. <a href='" + GOV.allowance + "' rel='noopener'>Source</a></p>";
+    if (kind === "own") {
+      set(box, big ? "amber" : "green", big ? "Check the £6,000 rule" : "Usually not trading",
+        "<p>Selling your own unwanted things from time to time is usually not trading, so gov.uk says you \"don't usually need to tell HMRC\", however much it adds up to. The £1,000 trading allowance isn't used up by it.</p>" + cgt +
+        "<p class='small'>Only you, HMRC or an accountant can decide whether a particular pattern of selling counts as trading; HMRC uses its \"badges of trade\". <a href='" + GOV.hustles + "' rel='noopener'>HMRC: Tax help for hustles</a></p>");
+      return;
+    }
+    if (gross === null) { set(box, "grey", "Waiting", "<p>Enter the total received for the items you bought or made to sell to see where you are.</p>" + cgt); return; }
+    var p = Math.min(100, Math.round(100 * gross / SETTINGS.allowanceGbp));
+    var meter = "<p class='small'>Gross trading income: " + gbp(gross) + " of " + gbp(SETTINGS.allowanceGbp) + "</p><div class='meter'><i style='width:" + p + "%'></i></div>";
+    var mixed = kind === "mixed" ? "<p class='small'>Only the bought-or-made-to-sell items count towards this line; your own old things don't.</p>" : "";
+    if (gross > SETTINGS.allowanceGbp) {
+      set(box, "red", "Over line 2",
+        "<p>Based on what you typed, your gross trading income for " + ty + " is " + gbp(gross) + ", which is over the £1,000 trading allowance.</p>" +
+        "<p>gov.uk says people with trading income over £1,000 in a tax year need to register for Self Assessment by <strong>5 October " + taxEndYear + "</strong>, with the return and any tax due by 31 January " + (taxEndYear+1) + ". You can then deduct either the £1,000 allowance or your actual costs (stock, postage, fees) — not both. Tax, if any, is on the profit after that, not on the total.</p>" + meter + mixed + cgt + srcA);
+    } else if (gross >= SETTINGS.amberAllowanceFrom) {
+      set(box, "amber", "Close to line 2",
+        "<p>Based on what you typed, your gross trading income for " + ty + " is " + gbp(gross) + " — " + gbp(SETTINGS.allowanceGbp - gross) + " under the £1,000 trading allowance, with the tax year running until 5 April " + taxEndYear + ". Under £1,000 there's no need to tell HMRC, but you must keep records; it's worth logging every sale from here so you know the day you cross.</p>" + meter + mixed + cgt + srcA);
+    } else {
+      set(box, "green", "Under line 2",
+        "<p>Based on what you typed, your gross trading income for " + ty + " is " + gbp(gross) + ", under the £1,000 trading allowance. gov.uk: no need to tell HMRC at this level, but \"you must keep records of this income\".</p>" + meter + mixed + cgt + srcA);
+    }
+  }
+
+  function set(box, colour, pill, html){
+    box.className = "result " + colour;
+    box.innerHTML = "<span class='pill'>" + esc(pill) + "</span>" + html;
+  }
+
+  ["platform","sales","total"].forEach(function(id){ $(id).addEventListener("input", line1); $(id).addEventListener("change", line1); });
+  ["gross","bigItem"].forEach(function(id){ $(id).addEventListener("input", line2); $(id).addEventListener("change", line2); });
+  Array.prototype.forEach.call(document.querySelectorAll("input[name=kind]"), function(r){ r.addEventListener("change", line2); });
+  line1(); line2();
+})();
+</script>
+</body>
+</html>
