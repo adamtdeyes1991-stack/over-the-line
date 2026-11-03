@@ -90,7 +90,7 @@
 
   <!-- ───────── Line 2: trading allowance ───────── -->
   <section class="card" aria-labelledby="l2h">
-    <h2 id="l2h">Line 2 — the £1,000 trading allowance</h2>
+    <h2 id="l2h">Line 2 — the <span id="l2amt">£1,000</span> trading allowance</h2>
     <small class="year">Counted across <strong>all</strong> platforms and trades, per <strong>tax</strong> year: <span id="taxYear"></span>.</small>
 
     <label>What are you mostly selling?</label>
@@ -118,7 +118,7 @@
   <section class="card">
     <h2>Dates that matter</h2>
     <dl id="dates"></dl>
-    <p class="small" style="margin-top:10px">The "£3,000 threshold" in the news was announced in March 2025 but is <strong>not yet law</strong>; HMRC's own page for side-hustlers still says £1,000 (checked <span class="checked"></span>). <a href="https://taxhelpforhustles.campaign.gov.uk/" rel="noopener">HMRC: Tax help for hustles</a></p>
+    <p class="small" style="margin-top:10px">The "£3,000" figure in the news: at the Budget on 28 October 2026 the government confirmed the trading allowance rises from £1,000 to £3,000 <strong>from 6 April 2027</strong> (tax year 2027/28 onwards), to be legislated in the Finance Bill 2026-27 — not yet law when checked (<span class="checked"></span>). It does not apply to 2026/27 or earlier, so this page uses £1,000 until then. The platform-reporting line (30 sales / €2,000) is not changing. <a href="https://www.gov.uk/government/publications/income-tax-increasing-the-trading-allowance/increasing-the-trading-allowance" rel="noopener">gov.uk: Increasing the trading allowance</a> · <a href="https://taxhelpforhustles.campaign.gov.uk/" rel="noopener">HMRC: Tax help for hustles</a></p>
   </section>
 
   <!-- ───────── Sheet CTA ───────── -->
@@ -131,7 +131,8 @@
 
   <footer>
     <p><strong>Not advice.</strong> This page adds up the figures you type and shows the thresholds HMRC publishes on gov.uk, with links. It does not calculate tax, decide whether you are trading, or tell you whether you must register or file. It is not tax, legal or financial advice. Figures were checked on gov.uk on <span class="checked"></span>; rules change — always check gov.uk or speak to HMRC or a qualified accountant about your own situation. Nothing you enter is stored or sent anywhere.</p>
-    <p><strong>Over the Line</strong> makes simple record-keeping tools for UK online sellers. This checker is free; the spreadsheet is £9.</p>
+    <p><strong>Over the Line</strong> makes simple record-keeping tools for UK online sellers. This checker is free; the spreadsheet is £9 including VAT.</p>
+    <p id="traderLine" class="hidden"></p>
     <p>Sources: <a href="https://www.gov.uk/guidance/selling-goods-or-services-on-a-digital-platform" rel="noopener">gov.uk — Selling goods or services on a digital platform</a> · <a href="https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income" rel="noopener">gov.uk — Tax-free allowances on property and trading income</a> · <a href="https://www.gov.uk/self-assessment-tax-returns/deadlines" rel="noopener">gov.uk — Self Assessment deadlines</a> · <a href="https://www.gov.uk/government/publications/chattels-and-capital-gains-tax-hs293-self-assessment-helpsheet/personal-possessions-and-capital-gains-tax-2024-hs293" rel="noopener">gov.uk — Personal possessions and Capital Gains Tax (HS293)</a> · <a href="https://www.vinted.co.uk/uk-reporting" rel="noopener">Vinted — UK reporting</a></p>
   </footer>
 </main>
@@ -140,15 +141,20 @@
 (function(){
   // ── Settings: change these when the rules change. Everything else follows. ──
   var SETTINGS = {
-    checkedOn: "27 October 2026",     // date the figures were last checked on gov.uk
+    checkedOn: "2 November 2026",     // date the figures were last checked on gov.uk
     sheetUrl: "https://payhip.com/b/xHoCJ", // Payhip URL of the £9 sheet. Empty = hide the button.
+    traderName: "Adam Deyes",          // Adam's full legal name (Companies Act 2006 s.1202 / E-Commerce Regs reg.6). Empty = line hidden.
+    traderAddress: "",                 // UK address at which documents can be served, incl. postcode
+    traderEmail: "adamtdeyes1991@hotmail.com", // contact email shown to visitors
     reportSales: 30,                   // platform reporting: sales of goods per calendar year
     reportValueGbp: 1700,              // platform reporting: €2,000, "about £1,700" per gov.uk
-    allowanceGbp: 1000,                // trading allowance per tax year
+    allowanceGbp: 1000,                // trading allowance per tax year, up to and including 2026/27
+    allowanceFrom2027Gbp: 3000,        // from 6 April 2027 (tax year 2027/28 on) — Budget 28 Oct 2026, Finance Bill 2026-27; confirm it became law before April 2027
+    allowanceFrom2027Live: false,      // set true once the Finance Bill 2026-27 has Royal Assent; until then the page keeps £1,000 and says so
     cgtChattelGbp: 6000,               // CGT personal-possessions limit per item/set
     amberSalesFrom: 25,                // amber starts here
     amberValueFrom: 1400,
-    amberAllowanceFrom: 800
+    amberAllowanceFrom: 800            // amber for the £1,000 line; scaled automatically for £3,000
   };
 
   var GOV = {
@@ -169,10 +175,15 @@
   // UK tax year runs 6 April to 5 April.
   var taxStartYear = (today.getMonth() > 3 || (today.getMonth() === 3 && today.getDate() >= 6)) ? y : y - 1;
   var taxEndYear = taxStartYear + 1;
+  // Trading allowance for the current tax year: £1,000 up to 2026/27; £3,000 from 2027/28 once the Finance Bill 2026-27 is law.
+  var ALLOW = (taxStartYear >= 2027 && SETTINGS.allowanceFrom2027Live) ? SETTINGS.allowanceFrom2027Gbp : SETTINGS.allowanceGbp;
+  var AMBER_ALLOW = Math.round(SETTINGS.amberAllowanceFrom * ALLOW / SETTINGS.allowanceGbp);
+  var ALLOW_TXT = gbp(ALLOW);
   var ty = taxStartYear + "/" + String(taxEndYear).slice(2);
   $("calYear").textContent = "1 January to 31 December " + y;
   $("taxYear").textContent = "6 April " + taxStartYear + " to 5 April " + taxEndYear + " (" + ty + ")";
   Array.prototype.forEach.call(document.querySelectorAll(".checked"), function(el){ el.textContent = SETTINGS.checkedOn; });
+  if ($("l2amt")) { $("l2amt").textContent = ALLOW_TXT; }
 
   $("dates").innerHTML =
     "<dt>Platform reporting period</dt><dd>1 January – 31 December " + y + ". Platforms send HMRC their report by 31 January " + (y+1) + " and must give you a copy. <a href='" + GOV.platform + "' rel='noopener'>gov.uk</a></dd>" +
@@ -182,6 +193,12 @@
 
   // ── CTA ──
   if (SETTINGS.sheetUrl) { $("ctaLink").href = SETTINGS.sheetUrl; } else { $("ctaCard").classList.add("hidden"); }
+  if (SETTINGS.traderName && SETTINGS.traderAddress) {
+    var tl = $("traderLine");
+    tl.innerHTML = "<strong>Over the Line</strong> is the trading name of " + esc(SETTINGS.traderName) + ", sole trader, " + esc(SETTINGS.traderAddress) + ", United Kingdom." +
+      (SETTINGS.traderEmail ? " Email: <a href='mailto:" + esc(SETTINGS.traderEmail) + "'>" + esc(SETTINGS.traderEmail) + "</a>." : "") + " Not VAT registered.";
+    tl.classList.remove("hidden");
+  }
 
   // ── Line 1 ──
   function line1(){
@@ -219,27 +236,27 @@
     var box = $("r2");
     $("tradeBlock").classList.toggle("hidden", kind === "own");
     var cgt = big ? "<p><strong>Over £6,000 for one item or set:</strong> gov.uk's Capital Gains Tax rules for personal possessions can apply even to your own things. <a href='" + GOV.cgt + "' rel='noopener'>HS293 on gov.uk</a> explains when there is a gain to work out.</p>" : "";
-    var srcA = "<p class='small'>gov.uk: the trading allowance is £1,000 of gross trading income per tax year. £1,000 or less: no need to tell HMRC, but keep records. Over £1,000: register for Self Assessment by 5 October after the tax year ends. HMRC's example of trading: buying things at car boot sales or charity shops to sell for more. <a href='" + GOV.allowance + "' rel='noopener'>Source</a></p>";
+    var srcA = "<p class='small'>gov.uk: the trading allowance is " + ALLOW_TXT + " of gross trading income per tax year. " + ALLOW_TXT + " or less: no need to tell HMRC, but keep records. Over " + ALLOW_TXT + ": register for Self Assessment by 5 October after the tax year ends. HMRC's example of trading: buying things at car boot sales or charity shops to sell for more. <a href='" + GOV.allowance + "' rel='noopener'>Source</a></p>";
     if (kind === "own") {
       set(box, big ? "amber" : "green", big ? "Check the £6,000 rule" : "Usually not trading",
-        "<p>Selling your own unwanted things from time to time is usually not trading, so gov.uk says you \"don't usually need to tell HMRC\", however much it adds up to. The £1,000 trading allowance isn't used up by it.</p>" + cgt +
+        "<p>Selling your own unwanted things from time to time is usually not trading, so gov.uk says you \"don't usually need to tell HMRC\", however much it adds up to. The " + ALLOW_TXT + " trading allowance isn't used up by it.</p>" + cgt +
         "<p class='small'>Only you, HMRC or an accountant can decide whether a particular pattern of selling counts as trading; HMRC uses its \"badges of trade\". <a href='" + GOV.hustles + "' rel='noopener'>HMRC: Tax help for hustles</a></p>");
       return;
     }
     if (gross === null) { set(box, "grey", "Waiting", "<p>Enter the total received for the items you bought or made to sell to see where you are.</p>" + cgt); return; }
-    var p = Math.min(100, Math.round(100 * gross / SETTINGS.allowanceGbp));
-    var meter = "<p class='small'>Gross trading income: " + gbp(gross) + " of " + gbp(SETTINGS.allowanceGbp) + "</p><div class='meter'><i style='width:" + p + "%'></i></div>";
+    var p = Math.min(100, Math.round(100 * gross / ALLOW));
+    var meter = "<p class='small'>Gross trading income: " + gbp(gross) + " of " + ALLOW_TXT + "</p><div class='meter'><i style='width:" + p + "%'></i></div>";
     var mixed = kind === "mixed" ? "<p class='small'>Only the bought-or-made-to-sell items count towards this line; your own old things don't.</p>" : "";
-    if (gross > SETTINGS.allowanceGbp) {
+    if (gross > ALLOW) {
       set(box, "red", "Over line 2",
-        "<p>Based on what you typed, your gross trading income for " + ty + " is " + gbp(gross) + ", which is over the £1,000 trading allowance.</p>" +
-        "<p>gov.uk says people with trading income over £1,000 in a tax year need to register for Self Assessment by <strong>5 October " + taxEndYear + "</strong>, with the return and any tax due by 31 January " + (taxEndYear+1) + ". You can then deduct either the £1,000 allowance or your actual costs (stock, postage, fees) — not both. Tax, if any, is on the profit after that, not on the total.</p>" + meter + mixed + cgt + srcA);
-    } else if (gross >= SETTINGS.amberAllowanceFrom) {
+        "<p>Based on what you typed, your gross trading income for " + ty + " is " + gbp(gross) + ", which is over the " + ALLOW_TXT + " trading allowance.</p>" +
+        "<p>gov.uk says people with trading income over " + ALLOW_TXT + " in a tax year need to register for Self Assessment by <strong>5 October " + taxEndYear + "</strong>, with the return and any tax due by 31 January " + (taxEndYear+1) + ". You can then deduct either the " + ALLOW_TXT + " allowance or your actual costs (stock, postage, fees) — not both. Tax, if any, is on the profit after that, not on the total.</p>" + meter + mixed + cgt + srcA);
+    } else if (gross >= AMBER_ALLOW) {
       set(box, "amber", "Close to line 2",
-        "<p>Based on what you typed, your gross trading income for " + ty + " is " + gbp(gross) + " — " + gbp(SETTINGS.allowanceGbp - gross) + " under the £1,000 trading allowance, with the tax year running until 5 April " + taxEndYear + ". Under £1,000 there's no need to tell HMRC, but you must keep records; it's worth logging every sale from here so you know the day you cross.</p>" + meter + mixed + cgt + srcA);
+        "<p>Based on what you typed, your gross trading income for " + ty + " is " + gbp(gross) + " — " + gbp(ALLOW - gross) + " under the " + ALLOW_TXT + " trading allowance, with the tax year running until 5 April " + taxEndYear + ". Under " + ALLOW_TXT + " there's no need to tell HMRC, but you must keep records; it's worth logging every sale from here so you know the day you cross.</p>" + meter + mixed + cgt + srcA);
     } else {
       set(box, "green", "Under line 2",
-        "<p>Based on what you typed, your gross trading income for " + ty + " is " + gbp(gross) + ", under the £1,000 trading allowance. gov.uk: no need to tell HMRC at this level, but \"you must keep records of this income\".</p>" + meter + mixed + cgt + srcA);
+        "<p>Based on what you typed, your gross trading income for " + ty + " is " + gbp(gross) + ", under the " + ALLOW_TXT + " trading allowance. gov.uk: no need to tell HMRC at this level, but \"you must keep records of this income\".</p>" + meter + mixed + cgt + srcA);
     }
   }
 
