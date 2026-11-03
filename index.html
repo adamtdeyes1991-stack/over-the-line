@@ -3,12 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="canonical" href="https://over-the-line.pages.dev/">
-<title>Am I over the HMRC line? — free checker for Vinted, eBay, Depop and Etsy sellers (UK)</title>
-<meta name="description" content="Free, no sign-up checker for UK online sellers. Type your sales and see where you stand against the two lines: the 30 sales / €2,000 platform-reporting line and the £1,000 trading allowance, with the gov.uk page each figure comes from.">
+<link rel="canonical" href="https://amiovertheline.co.uk/">
+<title>Do I have to pay tax on Vinted? Free HMRC line checker (UK)</title>
+<meta name="description" content="Free Vinted tax checker: the HMRC '30 item rule' (30 sales or €2,000 a calendar year) and the £1,000 trading allowance (per tax year). Type your sales, see where you stand. gov.uk sources, no sign-up.">
 <meta property="og:site_name" content="Over the Line">
-<meta property="og:title" content="Am I over the HMRC line? — free checker for UK online sellers">
-<meta property="og:description" content="Two lines, two different years. Type your numbers, see where you stand. Nothing stored, no sign-up, not advice.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://amiovertheline.co.uk/">
+<meta property="og:title" content="Do I have to pay tax on Vinted? Free HMRC line checker (UK)">
+<meta property="og:description" content="Two lines, two different years: the 30-sales reporting line and the £1,000 trading allowance. Type your numbers, see where you stand. Nothing stored, no sign-up, not advice.">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Do I have to pay tax on Vinted, eBay, Depop or Etsy sales?",
+     "acceptedAnswer": {"@type": "Answer", "text": "It depends on what you sell, not on which app you use. gov.uk says selling your own unwanted things from time to time is usually not trading, so there is usually nothing to tell HMRC, however much it adds up to. Buying or making things in order to sell them is trading: gov.uk says people whose gross trading income is over £1,000 in a tax year (6 April to 5 April) need to register for Self Assessment, and tax, if any, is worked out on the profit after costs. Only HMRC or an accountant can say which applies to you."}},
+    {"@type": "Question", "name": "What is the HMRC \"30 item rule\" on Vinted and eBay?",
+     "acceptedAnswer": {"@type": "Answer", "text": "It is a reporting rule, not a tax rule. Since January 2024, platforms such as Vinted, eBay, Depop and Etsy have had to send HMRC the details of sellers who reach 30 sales of goods or about £1,700 (€2,000) on that platform in a calendar year. They report by 31 January and give the seller a copy. HMRC's own page says a platform report does not automatically mean you owe tax."}},
+    {"@type": "Question", "name": "Vinted has asked for my National Insurance number. What is this HMRC form?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Once you cross the reporting line, the platform is required by law to collect and report your name, address, date of birth, National Insurance number and your total for the calendar year (less its fees). Filling it in is not declaring income and is not a tax return. Whether any tax is due depends on the separate trading-allowance question."}},
+    {"@type": "Question", "name": "How much can I earn on Vinted before paying tax?",
+     "acceptedAnswer": {"@type": "Answer", "text": "For things you bought or made to sell, the trading allowance is £1,000 of gross trading income per tax year (6 April to 5 April). At £1,000 or less, gov.uk says there is no need to tell HMRC but you must keep records. Over £1,000, gov.uk says to register for Self Assessment by 5 October after the tax year ends; tax, if any, is on the profit after deducting either your costs or the £1,000 allowance. From 6 April 2027 the allowance rises to £3,000 (Budget, 28 October 2026; not yet law). Your own old clothes and belongings do not use up the allowance."}},
+    {"@type": "Question", "name": "Why doesn't the figure Vinted or eBay sends HMRC match my own total?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Platforms report the calendar year (1 January to 31 December) and deduct their fees; the trading allowance is measured over the tax year (6 April to 5 April) on gross income. The two will never line up, which is why it helps to keep your own log of every sale."}},
+    {"@type": "Question", "name": "Is this checker tax advice, and does it store my numbers?",
+     "acceptedAnswer": {"@type": "Answer", "text": "No and no. The page adds up the figures you type and shows the thresholds HMRC publishes on gov.uk, with links. It does not calculate tax, decide whether you are trading, or tell you whether you must register or file. Nothing you enter leaves your browser."}}
+  ]
+}
+</script>
 <style>
   :root{
     --bg:#f6f7f4; --card:#ffffff; --ink:#1d1f1a; --muted:#5d6256; --line:#dcdfd6;
@@ -58,13 +81,15 @@
   footer{color:var(--muted);font-size:.85rem;margin-top:24px;border-top:1px solid var(--line);padding-top:12px}
   .brand{font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 0 6px}
   .hidden{display:none}
+  .faq h3{font-size:1rem;margin:14px 0 4px}
+  .faq p{margin:0 0 6px}
 </style>
 </head>
 <body>
 <main>
   <p class="brand">Over the Line · free checker</p>
   <h1>Am I over the HMRC line?</h1>
-  <p class="lead">Free checker for UK sellers on Vinted, eBay, Depop and Etsy. There are <strong>two</strong> lines, measured over <strong>two different years</strong>. Type your numbers and see where you stand against each, with the gov.uk page every figure comes from. Nothing you type leaves this page.</p>
+  <p class="lead">Free Vinted, eBay, Depop and Etsy tax checker for UK sellers. There are <strong>two</strong> lines — the "30 item rule" that decides whether the platform reports you, and the £1,000 trading allowance — measured over <strong>two different years</strong>. Type your numbers and see where you stand against each, with the gov.uk page every figure comes from. Nothing you type leaves this page. <a href="#faq">Common questions</a> are answered below.</p>
 
   <!-- ───────── Line 1: platform reporting ───────── -->
   <section class="card" aria-labelledby="l1h">
@@ -129,6 +154,30 @@
     <p class="small">One-off payment, instant download, 14-day refund if it doesn't do what the listing says.</p>
   </section>
 
+  <!-- ───────── FAQ (plain HTML; mirrors the FAQPage JSON-LD in <head>) ───────── -->
+  <section class="card faq" id="faq" aria-labelledby="faqh">
+    <h2 id="faqh">Common questions about Vinted, eBay and Depop tax</h2>
+    <p class="small">Short answers with the gov.uk source. Not advice — see the note at the bottom of the page.</p>
+
+    <h3>Do I have to pay tax on Vinted, eBay, Depop or Etsy sales?</h3>
+    <p>It depends on what you sell, not on which app you use. gov.uk says selling your own unwanted things from time to time is usually not trading, so there is usually nothing to tell HMRC, however much it adds up to. Buying or making things in order to sell them is trading: gov.uk says people whose gross trading income is over <span class="allow">£1,000</span> in a tax year (6 April to 5 April) need to register for Self Assessment, and tax, if any, is worked out on the profit after costs. Only HMRC or an accountant can say which applies to you. <a href="https://taxhelpforhustles.campaign.gov.uk/" rel="noopener">HMRC: Tax help for hustles</a></p>
+
+    <h3>What is the HMRC "30 item rule" on Vinted and eBay?</h3>
+    <p>It is a reporting rule, not a tax rule. Since January 2024, platforms such as Vinted, eBay, Depop and Etsy have had to send HMRC the details of sellers who reach 30 sales of goods or about £1,700 (€2,000) on that platform in a calendar year. They report by 31 January and give the seller a copy. HMRC's own page says a platform report "does not automatically mean you owe tax". <a href="https://www.gov.uk/guidance/selling-goods-or-services-on-a-digital-platform" rel="noopener">gov.uk: Selling goods or services on a digital platform</a></p>
+
+    <h3>Vinted has asked for my National Insurance number. What is this HMRC form?</h3>
+    <p>Once you cross the reporting line, the platform is required by law to collect and report your name, address, date of birth, National Insurance number and your total for the calendar year (less its fees). Filling it in is not declaring income and is not a tax return. Whether any tax is due depends on the separate trading-allowance question. <a href="https://www.vinted.co.uk/uk-reporting" rel="noopener">Vinted: UK reporting</a></p>
+
+    <h3>How much can I earn on Vinted before paying tax?</h3>
+    <p>For things you bought or made to sell, the trading allowance is <span class="allow">£1,000</span> of gross trading income per tax year (6 April to 5 April). At <span class="allow">£1,000</span> or less, gov.uk says there is no need to tell HMRC but you must keep records. Over <span class="allow">£1,000</span>, gov.uk says to register for Self Assessment by 5 October after the tax year ends; tax, if any, is on the profit after deducting either your costs or the <span class="allow">£1,000</span> allowance. <span id="faqRise">From 6 April 2027 the allowance rises to £3,000 (Budget, 28 October 2026; not yet law).</span> Your own old clothes and belongings do not use up the allowance. <a href="https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income" rel="noopener">gov.uk: Tax-free allowances on property and trading income</a></p>
+
+    <h3>Why doesn't the figure Vinted or eBay sends HMRC match my own total?</h3>
+    <p>Platforms report the calendar year (1 January to 31 December) and deduct their fees; the trading allowance is measured over the tax year (6 April to 5 April) on gross income. The two will never line up, which is why it helps to keep your own log of every sale.</p>
+
+    <h3>Is this checker tax advice, and does it store my numbers?</h3>
+    <p>No and no. The page adds up the figures you type and shows the thresholds HMRC publishes on gov.uk, with links. It does not calculate tax, decide whether you are trading, or tell you whether you must register or file. Nothing you enter leaves your browser.</p>
+  </section>
+
   <footer>
     <p><strong>Not advice.</strong> This page adds up the figures you type and shows the thresholds HMRC publishes on gov.uk, with links. It does not calculate tax, decide whether you are trading, or tell you whether you must register or file. It is not tax, legal or financial advice. Figures were checked on gov.uk on <span class="checked"></span>; rules change — always check gov.uk or speak to HMRC or a qualified accountant about your own situation. Nothing you enter is stored or sent anywhere.</p>
     <p><strong>Over the Line</strong> makes simple record-keeping tools for UK online sellers. This checker is free; the spreadsheet is £9 including VAT.</p>
@@ -184,6 +233,8 @@
   $("taxYear").textContent = "6 April " + taxStartYear + " to 5 April " + taxEndYear + " (" + ty + ")";
   Array.prototype.forEach.call(document.querySelectorAll(".checked"), function(el){ el.textContent = SETTINGS.checkedOn; });
   if ($("l2amt")) { $("l2amt").textContent = ALLOW_TXT; }
+  Array.prototype.forEach.call(document.querySelectorAll(".faq .allow"), function(el){ el.textContent = ALLOW_TXT; });
+  if ($("faqRise") && ALLOW !== SETTINGS.allowanceGbp) { $("faqRise").classList.add("hidden"); }
 
   $("dates").innerHTML =
     "<dt>Platform reporting period</dt><dd>1 January – 31 December " + y + ". Platforms send HMRC their report by 31 January " + (y+1) + " and must give you a copy. <a href='" + GOV.platform + "' rel='noopener'>gov.uk</a></dd>" +
